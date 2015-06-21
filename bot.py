@@ -12,7 +12,7 @@ twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 banned_words = ["elev", "elever", "eleven", "eleverene", "skole", "skoler", "skolen", "skolerne", "lærer", "lærere", "læreren", "lærerene"]
 approved_words = ["studerende","studerende", "den studerende", "de studerende", "universitet", "universiteter", "universitetet", "universiteterne", "underviser", "undervisere", "underviseren", "underviserne"]
-hashtags = ["#austudieliv", "#aarhusuni", "#yourniversity", "#youruniversity", "#Koefoed_BOT"]
+hashtags = ["#austudieliv", "#aarhusuni", "#yourniversity", "#youruniversity", "#aarhusuniversity", "#Koefoed_BOT"]
 cache = []
 
 def my_timeline():
@@ -98,23 +98,8 @@ def search_for_hash():
                 elif(len(answer_generate01)==4):
                     twitter.update_status(status="Hov @%s, du skrev %s, %s, %s og %s, mente du %s, %s, %s og %s?" %(name, answer_generate02[0], answer_generate02[1], answer_generate02[2], answer_generate02[3], answer_generate01[0], answer_generate01[1], answer_generate01[2], answer_generate01[3]), in_reply_to_status_id=tweet['id_str'])
                     print("Hov @%s, du skrev %s, %s, %s og %s, mente du %s, %s, %s og %s?" %(name, answer_generate02[0], answer_generate02[1], answer_generate02[2], answer_generate02[3], answer_generate01[0], answer_generate01[1], answer_generate01[2], answer_generate01[3]))
-
-
-
-
-
-                # isMatch = any(string in tweet_text for string in banned_words)
-                # if tweet['id_str'] not in cache and isMatch:
-                #     print("found match: " + tweet['id_str'])
-                #     name = tweet["user"]["screen_name"]
-                #     print(name)
-                #     twitter.update_status(status="@%s Ups, du skrev elev, skole eller lærer. Mente du studerende, universitet eller underviser?" %(name,), in_reply_to_status_id=tweet['id_str'])
-                #     cache.append(tweet['id_str'])
-                #     print("commented")
-                #     print('_______________________________\n\n')
-                # else:
-                #     print("already in cache ")
-                #     print('_______________________________\n\n')
+                elif(len(answer_generate01)>=5):
+                    twitter.update_status(status="%s, husk at man er studerende, når man går universitet" %(name), in_reply_to_status_id=tweet['id_str'])
             print('################################')
     except TwythonError as e:
         print(e)
@@ -139,10 +124,6 @@ def library_for_old_tweets(input_file):
     else:
         return True
            
-
-#my_timeline()
-#search_for_hash()
-#get_other_timeline('koefoed')
 startup()
 while True:
     search_for_hash()
