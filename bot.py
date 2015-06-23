@@ -10,9 +10,9 @@ OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET"
 
 twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)	
 
-banned_words = ["elev", "elever", "eleven", "eleverene", "skole", "skoler", "skolen", "skolerne", "lærer", "lærere", "læreren", "lærerene"]
+banned_words = ["elev", "elever", "eleven", "eleverne", "skole", "skoler", "skolen", "skolerne", "lærer", "lærere", "læreren", "lærerene"]
 approved_words = ["studerende","studerende", "den studerende", "de studerende", "universitet", "universiteter", "universitetet", "universiteterne", "underviser", "undervisere", "underviseren", "underviserne"]
-hashtags = ["#austudieliv", "#aarhusuni", "#yourniversity", "#youruniversity", "#aarhusuniversity", "#Koefoed_BOT"]
+hashtags = ["#austudieliv", "#aarhusuni", "#yourniversity", "#youruniversity", "#aarhusuniversity", "#Koefoed_BOT", "#KoefoedBot"]
 cache = []
 
 def my_timeline():
@@ -36,7 +36,7 @@ def startup():
     print('_______________________________\n\n')
     try:
         for tags in hashtags:    
-            search = twitter.search(q=tags ,count=10)   #**supply whatever query you want here**                      
+            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**                      
             tweets = search['statuses']
             print('######This is the hashtag stream######')
             for tweet in tweets:
@@ -58,13 +58,12 @@ def search_for_hash():
     print('Fetching hashtags')
     try:
         for tags in hashtags:    
-            search = twitter.search(q=tags ,count=10)   #**supply whatever query you want here**	                  
+            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**	                  
             tweets = search['statuses']
             print('######Searching for matches in '+tags+"######")
             for tweet in tweets:
                 answer_generate01 = []
                 answer_generate02 = []
-                
                 tweet_text = tweet['text'].lower()
                 #searching tweet text
                 for index in range(len(banned_words)):
@@ -100,7 +99,7 @@ def search_for_hash():
                     print("Hov @%s, du skrev %s, %s, %s og %s, mente du %s, %s, %s og %s?" %(name, answer_generate02[0], answer_generate02[1], answer_generate02[2], answer_generate02[3], answer_generate01[0], answer_generate01[1], answer_generate01[2], answer_generate01[3]))
                 elif(len(answer_generate01)>=5):
                     twitter.update_status(status="%s, husk at man er studerende, når man går universitet" %(name), in_reply_to_status_id=tweet['id_str'])
-            print('################################')
+            print('#################################################')
     except TwythonError as e:
         print(e)
 
@@ -128,4 +127,5 @@ startup()
 while True:
     search_for_hash()
     print("Going to sleep")
-    time.sleep(30)
+    time.sleep(60)
+
