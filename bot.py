@@ -30,7 +30,7 @@ def get_other_timeline(user_name):
         print("######This Lone's timeline######")
         for tweet in user_timeline:
             print(tweet['text'])
-    except TwythonError as e:
+    except Exception as e:
         print(e)
 
 def startup():
@@ -102,7 +102,7 @@ def search_for_hash():
                 elif(len(answer_generate01)>=5):
                     twitter.update_status(status="%s, husk at man er studerende, når man går universitet" %(name), in_reply_to_status_id=tweet['id_str'])
             print('#################################################')
-    except TwythonError as e:
+    except Exception as e:
         print(e)
 
 def library_for_old_tweets(input_file):
