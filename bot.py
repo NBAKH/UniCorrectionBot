@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from twython import Twython
 import time
 import re
@@ -8,7 +10,7 @@ APP_SECRET = "APP_SECRET"
 OAUTH_TOKEN = "OAUTH_TOKEN"
 OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET"
 
-twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)	
+twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 banned_words = ["elev", "elever", "eleven", "eleverne", "skole", "skoler", "skolen", "skolerne", "lærer", "lærere", "læreren", "lærerene"]
 approved_words = ["studerende","studerende", "den studerende", "de studerende", "universitet", "universiteter", "universitetet", "universiteterne", "underviser", "undervisere", "underviseren", "underviserne"]
@@ -28,15 +30,15 @@ def get_other_timeline(user_name):
         print("######This Lone's timeline######")
         for tweet in user_timeline:
             print(tweet['text'])
-    except TwythonError as e:
+    except Exception as e:
         print(e)
 
 def startup():
     print('Starting Koefoed_BOT')
     print('_______________________________\n\n')
     try:
-        for tags in hashtags:    
-            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**                      
+        for tags in hashtags:
+            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**
             tweets = search['statuses']
             print('######This is the hashtag stream######')
             for tweet in tweets:
@@ -51,14 +53,14 @@ def startup():
             print('_______________________________')
             for ids in cache:
                 print(ids)
-    except TwythonError as e:
+    except Exception as e:
         print(e)
 
 def search_for_hash():
     print('Fetching hashtags')
     try:
-        for tags in hashtags:    
-            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**	                  
+        for tags in hashtags:
+            search = twitter.search(q=tags ,count=5)   #**supply whatever query you want here**
             tweets = search['statuses']
             print('######Searching for matches in '+tags+"######")
             for tweet in tweets:
@@ -100,7 +102,7 @@ def search_for_hash():
                 elif(len(answer_generate01)>=5):
                     twitter.update_status(status="%s, husk at man er studerende, når man går universitet" %(name), in_reply_to_status_id=tweet['id_str'])
             print('#################################################')
-    except TwythonError as e:
+    except Exception as e:
         print(e)
 
 def library_for_old_tweets(input_file):
@@ -122,7 +124,7 @@ def library_for_old_tweets(input_file):
             return False
     else:
         return True
-           
+
 startup()
 while True:
     search_for_hash()
